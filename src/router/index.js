@@ -48,6 +48,12 @@ const routes = [
     name: 'planning',
     meta: {layout: 'main'},
     component: () => import('../views/Planning.vue')
+  },
+  {
+    path: '/profile',
+    name: 'profile',
+    meta: {layout: 'main'},
+    component: () => import('../views/Profile.vue')
   }
 ]
 
