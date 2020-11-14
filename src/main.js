@@ -8,6 +8,7 @@ import {
 } from '@vuelidate/core'
 import router from './router'
 import store from './store'
+import loader from './Loader'
 import 'materialize-css/dist/js/materialize'
 
 import firebase from 'firebase/app'
@@ -34,6 +35,7 @@ firebase.auth().onAuthStateChanged(() => {
     .use(store)
     .use(router)
     .use(VuelidatePlugin)
+    .component('Loader', loader)
     .mount('#app')
   }
 })

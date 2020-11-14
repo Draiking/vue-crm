@@ -16,7 +16,7 @@
                 data-target="dropdown"
                 ref="dropdown"
               >
-                USER NAME
+                {{name}}
                 <i class="material-icons right">arrow_drop_down</i>
               </a>
 
@@ -60,6 +60,11 @@ import M from 'materialize-css';
         constrainWidth: false
       })
     },
+    computed: {
+      name() {
+        return this.$store.getters.info.name
+      }
+    },
     methods: {
       async logout() {
         await this.$store.dispatch('logout')
@@ -87,9 +92,6 @@ import M from 'materialize-css';
       if(this.dropdown && this.dropdown.destroy) {
         this.dropdown.destroy()
       }
-    },
-    computed: {
-      
     }
   }
 </script>

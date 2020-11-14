@@ -1,14 +1,13 @@
 <template>
   <div>
-    <div class="app-main-layout">
-     
+    <Loader v-if="loading" />
+    <div class="app-main-layout" v-else>
       <Navbar @show-menu="isOpen = !isOpen" />
-      <Sidebar :isOpen="isOpen"/>
-     
+      <Sidebar :isOpen="isOpen" />
 
-      <main class="app-content" :class="{full: !isOpen}">
+      <main class="app-content" :class="{ full: !isOpen }">
         <div class="app-page">
-          <router-view/>
+          <router-view />
         </div>
       </main>
 
@@ -22,19 +21,26 @@
 </template>
 
 <script>
-import Navbar from '../components/Navbar';
-import Sidebar from '../components/Sidebar';
+import Navbar from "../components/Navbar";
+import Sidebar from "../components/Sidebar";
 
- export default {
-   name: 'main-layout',
-   components: {
-      Navbar,
-      Sidebar
-   },
-   data() {
-     return {
-       isOpen: true
-     }
-   }
-  }
+export default {
+  name: "main-layout",
+  components: {
+    Navbar,
+    Sidebar
+  },
+  data() {
+    return {
+      isOpen: true,
+      loading: true,
+    };
+  },
+  async mounted() {
+    if (!Object.keys(this.$store.getters.info).length) {
+      await this.$store.dispatch("fetchInfo");
+    }
+    this.loading = false;
+  },
+};
 </script>
