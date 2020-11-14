@@ -3,17 +3,34 @@
     <div class="card-content">
       <span class="card-title">Домашняя бухгалтерия</span>
       <div class="input-field">
-        <input id="email" type="text" v-model.trim="userEmail" :class="{ invalid: v$.userEmail.$invalid } "/>
+        <input
+          id="email"
+          type="text"
+          v-model.trim="userEmail"
+          :class="{ invalid: v$.userEmail.$invalid }"
+        />
         <label for="email">Email</label>
         <small class="helper-text invalid">Email</small>
       </div>
       <div class="input-field">
-        <input id="password" type="password" class="validate" v-model.trim="userPassword" :class="{ invalid: v$.userPassword.$invalid }" />
+        <input
+          id="password"
+          type="password"
+          class="validate"
+          v-model.trim="userPassword"
+          :class="{ invalid: v$.userPassword.$invalid }"
+        />
         <label for="password">Пароль</label>
         <small class="helper-text invalid">Password</small>
       </div>
       <div class="input-field">
-        <input id="name" type="text" class="validate" v-model.trim="userName" :class="{ invalid: v$.userName.$invalid }" />
+        <input
+          id="name"
+          type="text"
+          class="validate"
+          v-model.trim="userName"
+          :class="{ invalid: v$.userName.$invalid }"
+        />
         <label for="name">Имя</label>
         <small class="helper-text invalid">Name</small>
       </div>
@@ -21,7 +38,7 @@
         <label>
           <input type="checkbox" v-model="agree" />
           <span>С правилами согласен</span>
-          <pre>{{agree}}</pre>
+          <pre>{{ agree }}</pre>
         </label>
       </p>
     </div>
@@ -50,30 +67,30 @@ export default {
   name: "registration",
   data() {
     return {
-      agree: false
-    }
+      agree: false,
+    };
   },
   methods: {
-    onRegistor() {
-      this.v$.$touch();
-      if (!this.v$.$invalid && this.agree) {
-        this.$router.push("/login");
-      }
-
+    async onRegistor() {
       const formData = {
         email: this.userEmail,
         password: this.userPassword,
-        name: this.userName
+        name: this.userName,
+      };
+
+      try {
+        await this.$store.dispatch("register", formData);
+        this.$router.push("/");
+      } catch (e) {
+        console.log(e);
       }
-      
-      console.log(formData)
-    }
+    },
   },
   setup() {
     const userEmail = ref("");
     const userPassword = ref("");
     const userName = ref("");
-   
+
     const v$ = useVuelidate(
       {
         userEmail: {
@@ -81,11 +98,11 @@ export default {
           email,
         },
         userPassword: {
-          required
+          required,
         },
         userName: {
-          required
-        }
+          required,
+        },
       },
       { userEmail, userPassword, userName }
     );
