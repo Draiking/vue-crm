@@ -55,18 +55,22 @@ export default {
     return {};
   },
   methods: {
-    onLogin() {
-      this.v$.$touch();
-      if (!this.v$.$invalid) {
-        this.$router.push("/");
-      }
+    async onLogin() {
+     
 
       const formData = {
         email: this.userEmail,
         password: this.userPassword,
+      };
+
+      try {
+         
+        await this.$store.dispatch("login", formData);
+        this.$router.push("/");
+      } catch (e) {
+        console.log(e)
       }
       
-      console.log(formData)
     },
   },
   setup() {
