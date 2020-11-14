@@ -8,4 +8,8 @@ import router from './router'
 import store from './store'
 import 'materialize-css/dist/js/materialize'
 
-createApp(App).use(store).use(router).use(VuelidatePlugin).mount('#app')
+createApp(App)
+.use(store)
+.use(router)
+.use(VuelidatePlugin)
+.mount('#app')
